@@ -2,7 +2,10 @@ name: Deploy Vite site to GitHub Pages
 
 on:
   push:
-    branches: [ main ]   # Runs whenever you push to main
+    branches: [ main ]
+
+permissions:
+  contents: write   # Allow Actions to push to gh-pages
 
 jobs:
   build-and-deploy:
@@ -15,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20   # Vite requires Node 20.19+ or 22.12+
+          node-version: 20   # Vite requires Node 20.19+ or higher
 
       - name: Install dependencies
         run: npm install
@@ -27,4 +30,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist   # Vite’s default build output folder
+          publish_dir: ./dist
